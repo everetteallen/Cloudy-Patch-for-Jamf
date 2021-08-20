@@ -40,7 +40,7 @@ This JSON data can be sent manually to trigger the initial cloud function using 
 ```shell
 curl -H 'Content-Type: application/json' -X PUT -d '{"event": {"jssID": 1,"lastUpdate": 1506031211000,"latestVersion": "61.0.3163.100","name": "Google Chrome","reportUrl": "https://foo.jamfcloud.com//view/patch/1/report"},"webhook": {"eventTimestamp": 1553550275590,"id": 7,"name": "Webhook Documentation","webhookEvent":"PatchSoftwareTitleUpdated"}}' "https://us-east1-yourcloudfunctionproject.cloudfunctions.net/yourcloudfunctionname"
 ```
-#### Note: this assumes you function is unauthenticated which may not be allowed by some GPS administrators
+#### Note: this assumes you function is unauthenticated which may not be allowed by some GCS administrators
 
 ## Cloud Functions
  It is beyond the scope of this project to explain Google Cloud Functions but Google has great documentation at https://cloud.google.com/functions/docs  I strongly recommend you read at least the Hellow World Tutorial before trying to implement CPJ.
