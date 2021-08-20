@@ -15,10 +15,10 @@ https://www.jamf.com/developers/webhooks/#patchsoftwaretitleupdated
 Jamf provides a web hook that contains:
 
 
-PatchSoftwareTitleUpdated Web Hook Information
+## PatchSoftwareTitleUpdated Web Hook Information
 
 This event is triggered when Jamf Pro receives an update to a patch title it is subscribed to. An example of the data format can be seen below (JSON)
-
+`
 {
     "event": {
         "jssID": 1,
@@ -34,7 +34,7 @@ This event is triggered when Jamf Pro receives an update to a patch title it is 
         "webhookEvent": "PatchSoftwareTitleUpdated"
     }
 }
-
+`
 This JSON data can be sent manually to trigger the initial cloud function using curl like this example:
 
 curl -H 'Content-Type: application/json' -X PUT -d '{"event": {"jssID": 1,"lastUpdate": 1506031211000,"latestVersion": "61.0.3163.100","name": "Google Chrome","reportUrl": "https://nc.jamfcloud.com//view/patch/1/report"},"webhook": {"eventTimestamp": 1553550275590,"id": 7,"name": "Webhook Documentation","webhookEvent":"PatchSoftwareTitleUpdated"}}' "https://us-east1-yourcloudfunctionproject.cloudfunctions.net/yourcloudfunctionname"
