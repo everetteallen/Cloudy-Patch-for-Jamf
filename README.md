@@ -11,7 +11,7 @@ The idea for this project is born of thinking about the design of other projects
 > If you were hoping to replace that old MacMini running autopkg - Sorry CPJ won't do that. 
 
 To date I have not seen any code to work with PKG installer files for repackaging, versioning, etc that does not require macOS.  However for sane vendors that produce true, signed, binary packages CPJ could replace some of that work.  This comes with some assumptions: 
-1) The Patch Title will not update before the vendor releases an installer package.  Since we can't actually tear apart the package to "version" it the way autopkg processors can, then we have to take this assumption.  Given that Jamf claims a 1-3 day turn-a-round on updating patch titles and that vendors usually don't announce new versions until the installers are available, I think this is a good assumption.
+1) The Patch Title will not update before the vendor releases an installer package.  Since we can't actually tear apart the package to "version" it the way autopkg processors can, then we have to take this assumption.  Given that Jamf claims a "best effort" turn-a-round on updating patch titles and that vendors usually don't announce new versions until the installers are available, I think this is a good assumption.
 
 2) The installer version available at the time the Patch Title updates is the same as the Patch Title version.  If there are rapid releases one might easily get a newer version of the installer.  I believe this race condition will be rare and worth the risk.
 
