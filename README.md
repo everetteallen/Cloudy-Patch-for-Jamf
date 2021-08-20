@@ -5,7 +5,7 @@ The Cloudy Patch for Jamf (CPJ) project aims to create a set of Google Cloud Ser
 
 The idea for this project is born of thinking about the design of other projects like autopkg, jamf api tool, jackalope, Spruce, Prune, etc.  As Apple gets farther and farther away from building true server hardware we are going to need a great deal of this functionality in a serverless, cloud environment like Google Cloud Services.  Be aware that there can be costs running Google cloud functions if the project goes beyond the free tiers or initial credits Google allows.  
 
-> If you were hoping to replace that old MacMini running autopkg CPJ won't do that. 
+> If you were hoping to replace that old MacMini running autopkg - Sorry CPJ won't do that. 
 
 To date I have not seen any code to work with PKG installer files for repackaging, versioning, etc that does not require macOS.  However for sane vendors that produce true, signed, binary packages CPJ could replace some of that work.  This comes with some assumptions: 
 1) The Patch Title will not update before the vendor releases an installer package.  Since we can't actually tear apart the package to "version" it the way autopkg processors can, then we have to take this assumption.  Given that Jamf claims a 1-3 day turn-a-round on updating patch titles and that vendors usually don't announce new versions until the installers are available, I think this is a good assumption.
