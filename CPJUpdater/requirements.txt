@@ -1,0 +1,5 @@
+# Function dependencies, for example:
+# package>=version
+flask==1.1.2
+google-cloud-error-reporting==1.0.0
+google-cloud-pubsub
