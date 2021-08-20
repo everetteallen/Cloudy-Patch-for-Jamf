@@ -1,5 +1,8 @@
 # Cloudy-Patch-for-Jamf
 
+# Warning: Work in Progress
+This project is fluid and evolving as I find out what works so your success with production implementations will depend on your work not mine. 
+
 ## Introduction
 The Cloudy Patch for Jamf (CPJ) project aims to create a set of Google Cloud Service - Cloud Functions that will use a web hook from Jamf Pro Patch Management to trigger the download of new packages(binary .pkg files) to a GCS bucket, rename with prefix string and suffix with pkg version number, upload to Jamf Pro JCDS for use, and notify via Google Chat api web hooks and Slack api web hooks.  Modularity will be accomplished using a series of cloud functions that respond to pub/sub triggers.  Initially, there are functions working for the web hook listener, the Slack notifier, and the Google Hangouts Chat notifier.  An alpha version of the package downloader that looks up the Patch Title in a Google Sheet returning a download url if available and storing on a Google bucket with rename is also available.  All other functions are concept only.
 
@@ -64,5 +67,3 @@ Listens for pub/sub of type CPJNotifier to send message to Google Chat web hook 
 ### GCF: CPJpkgCleaner
  Will be triggered by a Google Cron to search the Jamf Pro servers for unused packages using code like BIG-RAT Prune, Spruce , and  JamfAPITool to create a configuration file for Prune or Spruce in a GCS bucket.  This way deletes can be handled as needed with the target being on a monthly basis.  May also want to add the results to BigQuery or Google Sheets for reporting via Google Data Studio.  At present we do not want to automate the deletion of packages.  Should also send pub/sub message of type CPJNotifier with Title “Unused Packages to Check for Delete” and give the Title and version if possible.
 
-# Warning: Work in Progress
-This project is fluid and evolving as I find out what works so your success with production implementations will depend on your work not mine. 
