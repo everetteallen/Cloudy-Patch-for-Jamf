@@ -37,25 +37,26 @@ This event is triggered when Jamf Pro receives an update to a patch title it is 
 ```
 This JSON data can be sent manually to trigger the initial cloud function using curl like this example:
 
-curl -H 'Content-Type: application/json' -X PUT -d '{"event": {"jssID": 1,"lastUpdate": 1506031211000,"latestVersion": "61.0.3163.100","name": "Google Chrome","reportUrl": "https://nc.jamfcloud.com//view/patch/1/report"},"webhook": {"eventTimestamp": 1553550275590,"id": 7,"name": "Webhook Documentation","webhookEvent":"PatchSoftwareTitleUpdated"}}' "https://us-east1-yourcloudfunctionproject.cloudfunctions.net/yourcloudfunctionname"
+curl -H 'Content-Type: application/json' -X PUT -d '{"event": {"jssID": 1,"lastUpdate": 1506031211000,"latestVersion": "61.0.3163.100","name": "Google Chrome","reportUrl": "https://foo.jamfcloud.com//view/patch/1/report"},"webhook": {"eventTimestamp": 1553550275590,"id": 7,"name": "Webhook Documentation","webhookEvent":"PatchSoftwareTitleUpdated"}}' "https://us-east1-yourcloudfunctionproject.cloudfunctions.net/yourcloudfunctionname"
 
 
-Cloud Functions
+## Cloud Functions
  It is beyond the scope of this project to explain Google Cloud Functions but Google has great documentation at https://cloud.google.com/functions/docs  I strongly recommend you read at least the Hellow World Tutorial before trying to implement CPJ.
  
-GCF: CPJupdater 
+### GCF: CPJupdater 
  Receives the web hook from the Jamf Pro Server and parses out the Patch Title name, Patch title version and creates a human-readable date/time string from the lastUpdate value. These are passed as a text message in the PubSub message that are subscribed to by CPJNotifierSlack and CPJNotiferGoogleChat. Finally another PubSub message is sent that contains only the name and version data for use by CPJpkgdownloader
 
-GCF: CPJpkgdownloader
+### GCF: CPJpkgdownloader
  Will confirm that a package does not exist in JCDS with the same name (plus prefix) and if not download a package for the software Patch Title determined by looking up the event:name from the web hook JSON in a Google Sheet to return the binary package download url.  The function wil download and store the .pkg file on a GCS bucket.  Then use Pub/Sub message to publish the package name and package version to CPJpkgnamer message.   We will assume that the vendor has proper pkg formatted files and no repackaging will be needed.  Note here that we may need another cloud function to watch for packages to be uploaded to a different GCS bucket and send the same pub/sub to CPJpkgnamer (CPJwatcher) as some packages do not have public download URLs due to being behind a paywall.
 
-GCF: CPJNotiferGoogleChat
+### GCF: CPJNotiferGoogleChat
 Listens for pub/sub of type CPJNotifier to send message to Google Chat web hook url with the package name, version and date/time.  Use code from HangoutsChatJPUNotifier.
 
-GCF: CPJNotifierSlack
+### GCF: CPJNotifierSlack
  Listens for pub/sub of type CPJNotifier to send a message to Slack web hook url with the package name, version and date/time.  
 
-GCF: CPJpkgCleaner
+### GCF: CPJpkgCleaner
  Will be triggered by a Google Cron to search the Jamf Pro servers for unused packages using code like BIG-RAT Prune, Spruce , and  JamfAPITool to create a configuration file for Prune or Spruce in a GCS bucket.  This way deletes can be handled as needed with the target being on a monthly basis.  May also want to add the results to BigQuery or Google Sheets for reporting via Google Data Studio.  At present we do not want to automate the deletion of packages.  Should also send pub/sub message of type CPJNotifier with Title “Unused Packages to Check for Delete” and give the Title and version if possible.
 
+# Warning: Work in Progress
 This project is fluid and evolving as I find out what works so your success with production implementations will depend on your work not mine. 
