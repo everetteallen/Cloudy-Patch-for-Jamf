@@ -47,7 +47,7 @@ curl -H 'Content-Type: application/json' -X PUT -d '{"event": {"jssID": 1,"lastU
 #### Note: this assumes you function is unauthenticated which may not be allowed by some GCS administrators
 
 ## Cloud Functions
- It is beyond the scope of this project to explain Google Cloud Functions but Google has great documentation at https://cloud.google.com/functions/docs  I strongly recommend you read at least the Hellow World Tutorial before trying to implement CPJ.
+ It is beyond the scope of this project to explain Google Cloud Functions but Google has great documentation at https://cloud.google.com/functions/docs  I strongly recommend you read at least the Hellow World Tutorial before trying to implement CPJ.  I will add a step by step walk-thru for setting up the function runtime environment variables when I have time.
  
 ### GCF: CPJupdater 
  Receives the web hook from the Jamf Pro Server and parses out the Patch Title name, Patch title version and creates a human-readable date/time string from the lastUpdate value. These are passed as a text message in the PubSub message that are subscribed to by CPJNotifierSlack and CPJNotiferGoogleChat. Finally another PubSub message is sent that contains only the name and version data for use by CPJpkgdownloader
