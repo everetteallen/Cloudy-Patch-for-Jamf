@@ -1,6 +1,6 @@
 # Cloudy-Patch-for-Jamf
 
-##Introduction
+## Introduction
 The Cloudy Patch for Jamf (CPJ) project aims to create a set of Google Cloud Service - Cloud Functions that will use a web hook from Jamf Pro Patch Management to trigger the download of new packages(binary .pkg files) to a GCS bucket, rename with prefix string and suffix with pkg version number, upload to Jamf pro JCDS for use, and notify via Google Chat api web hooks and Slack api web hooks.  Modularity will be accomplished using a series of cloud functions that respond to pub/sub triggers.  Initially, there are functions working for the web hook listener, the Slack notifier, and the Google Hangouts Chat notifier.  An alpha version of the package downloader that looks up the Patch Title in a Google Sheet returning a download url if available and storing on a Google bucket with rename is also available.  All other functions are concept only.
 
 The idea for this project is born of thinking about the design of other projects like autopkg, jamf api tool, jackalope, Spruce, Prune, etc.  As Apple gets farther and farther away from building true server hardware we are going to need a great deal of this functionality in a serverless, cloud environment like Google Cloud Services.  Be aware that there can be costs running Google cloud functions if the project goes beyond then free tiers or initial credits Google allows.  If you were hoping to replace that old MacMini running autopkg CPJ won't do that. To date I have not seen any code to work with PKG installer files for repackaging, versioning, etc that does not require macOS.  However for sane vendors that produce true, signed, binary packages CPJ could replace some of that work.  This comes with some assumptions: 
@@ -8,7 +8,7 @@ The idea for this project is born of thinking about the design of other projects
 
 2) The installer version available at the time the Patch Title updates is the same as the Patch Title.  If there are rapid releases one might easily get a newer version of the installer.  I believe this race condition will be rare and worth the risk.
 
-##Overview
+## Overview
 Jamf Pro Patch web hook
  A JAMF Web hook will trigger the CPJupdater function when a new software version is added.  Will need to pass the name, latestVersion, and lastUpdate of the software title from the Jamf webhook JSON “event” record to other cloud functions in the chain.  The webhookEvent text from the “webhook” record is also useful for the notification functions to validate the source.
 https://www.jamf.com/developers/webhooks/#patchsoftwaretitleupdated
